@@ -1,14 +1,21 @@
 package graph
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
 
-type Vertex struct {
-	elem int
-}
+	"github.com/davidcarbn/algorithms/data-structures/graph/vertex"
+)
+
+type Vertex = vertex.Vertex
 
 type Graph struct {
 	vertices []*Vertex
 	edges    map[*Vertex][]*Vertex
+}
+
+func New() *Graph {
+	return new(Graph)
 }
 
 func (g *Graph) AddVertex(v *Vertex) {
@@ -22,20 +29,15 @@ func (g *Graph) AddEdge(v *Vertex, w *Vertex) {
 	fmt.Printf("%p", g.edges)
 }
 
-func main() {
+func TestAddVertex(t *testing.T) {
 	var g Graph
 	v1 := Vertex{1}
 	v2 := Vertex{2}
-	v3 := Vertex{3}
-	v4 := Vertex{3}
-
 	g.AddVertex(&v1)
 	g.AddVertex(&v2)
-	g.AddVertex(&v3)
-	g.AddVertex(&v4)
-
-	g.AddEdge(&v1, &v2)
-	g.AddEdge(&v2, &v3)
-	g.AddEdge(&v2, &v4)
-	g.AddEdge(&v3, &v4)
+	for _, v := range g.vertices {
+		if v != &v1 || v != &v2 {
+			t.Errorf("AddVertex = %q", g.vertices)
+		}
+	}
 }
