@@ -25,26 +25,29 @@ func ConnectedComponents(g *Graph) [][]Vertex {
 	isUnfinished = make(map[Vertex]bool)
 	visited = make(map[Vertex]bool)
 	count = 0
-	connectedComponents := make([][]Vertex, 0)
+	connectedComponents = make([][]Vertex, 0)
 	dfs(vertices[0], g)
 	return connectedComponents
 }
 
 func dfs(v Vertex, g *Graph) {
+
 	count++
 	dfsnum[v] = count
 	visited[v] = true
+	roots.Push(v)
+	unfinished.Push(v)
+	isUnfinished[v] = true
 	for _, w := range g.GetOutEdges(v) {
 		if _, ok := visited[w]; !ok {
 			dfs(w, g)
 		} else if _, ok := isUnfinished[w]; ok {
-			topRoot, err := roots.Peek()
-			if err == nil {
-				for valW, valRoot := dfsnum[w], dfsnum[topRoot]; valW < valRoot; {
-					roots.Pop()
-					topRoot, _ = roots.Peek()
-				}
+			topRoot, _ := roots.Peek()
+			for valW, valRoot := dfsnum[w], dfsnum[topRoot]; valW < valRoot; valRoot = dfsnum[topRoot] {
+				roots.Pop()
+				topRoot, _ = roots.Peek()
 			}
+
 		}
 	}
 	if topRoot, _ := roots.Peek(); topRoot == v {
