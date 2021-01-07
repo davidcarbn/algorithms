@@ -1,4 +1,4 @@
-package edgetypes
+package graphalgorithms
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ import (
 type Vertex = vertex.Vertex
 type Graph = graph.Graph
 
-func getEdgeTypes(g *Graph) map[string][]Vertex {
+func GetEdgeTypes(g *Graph) map[string][]Vertex {
 	var edgeTypes = make(map[string][]Vertex)
 	for v := range g.GetVertices() {
 		fmt.Println(v)

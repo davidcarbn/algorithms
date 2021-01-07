@@ -1,4 +1,4 @@
-package connectedcomponents
+package graphalgorithms
 
 import (
 	"github.com/davidcarbn/algorithms/data-structures/graph"
